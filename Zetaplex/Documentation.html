@@ -1,0 +1,538 @@
+<center><b>Vocabulary:</b></center>
+<pre>                     <i>Pop</i> - Take the first number off the stack and use it for an operation or discard.
+                    <i>Peek</i> - Copy the first number off the stack and use it for an operation.
+                    <i>Push</i> - Add a value to the top of the stack.
+  <i>Pop/Peek/Push a String</i> - Like the commands above but with a String (Strings explained more bellow).</pre><br>
+
+
+<b>Zetaplex</b> is a 2 dimensional esoteric programming language held in .zeta files (which are plain .txt files with a different extension). This means that program flow can go left, right, up or down, not just the usuall line by line. If program flow goes off the side of the program, it wraps to the other end (if you go off right you end up on the left side), continuing in the same direction. Each command is a set of 2 characters, the Section, and the Command characters. There are a few exceptions to this rule, which are the commands &gt; &lt; ^ v \ / , " # and "space" (character 32). The commands &gt; &lt; ^ v \ / (The flow controll commands), and the "space" command are also special in that they execute emediately. For example
+<pre>F&gt;e</pre>
+<pre>F\
+ e</pre>
+and
+<pre>Fe</pre>
+are all the same. The "space" and # commands are NOPs. The , command jumps the next two characters, made specifically for the if commands in the flow section.<br><br>
+
+In <b>Zetaplex</b> the only form of data storage is an infinite tape of infinite stacks (obviously this is restricted by computer memory and implementation) which can contain floats and ints (Note: There is also a section of commands that treat the current stack as if it where a list). At the start of the program the Stack Pointer is 0 (so you are <i>Popping</i>/<i>Pushing</i> from Stack 0), then you can increase, decrease or set the Stack Pointer at will. If you pop or peek from an empty stack you get a 0. The only stack with a starting value is stack 2 which has three 255's on top for graphics (Explained bellow).<br>
+<b>Note:</b> A good strategie is to plan out which stack will hold what data before writing your programs.<br><br>
+
+Even though <b>Zetaplex</b> can only store floats and ints, it simulates strings like a lot of other languages, null terminated arrays. The only difference is that the "array" is on the top of the stack and the null is any number not in the range 1-255 (so not a valid ASCII code). Due to stacks being LIFO (Last in, First out), strings have to be read from the program backwards, or reversed with a command after being added. When the program hits a " command every character after that is pushed as its ASCII value untill it reaches the ending ". There are also special commands that can be used inside a string, they start with a " and are &gt; &lt; ^ v \ / " j J. The flow commands act like normal when used, the " adds them to the string, j jumps the next character and J jumps the next pop characters. For example:<br>
+<pre>"""Example"\
+           "
+           \"j" String"" "J                                "</pre>
+Will add the string "Example String" exactly (including the quotes) to the stack. The first " starts the string, the "" adds the " then Example is added. "\ makes flow go down, then "\ again makes it go right. "j then skips the next " then String (with the space in front) is added. The next "" adds the end quote, then the "J pops the space before it, jumping the next 32 spaces where it hits the end " stopping the string.<br><br>
+
+There are no If blocks or Loops built into <b>Zetaplex</b>, the only way to do one is to use a combination of an if statement and flow controll. All If's in <b>Zetaplex</b> are "if condition is true, jump the next character" (Note: Its "jump next character" not "jump next command"). For an example, a simple If block would be:<br>
+<pre>F?\commands1&gt;Fe
+  \commands2/</pre>
+The command F? jumps the \ if <i>Pop</i> is 0, going and running commads1. If <i>Pop</i> is not 0 then it hits both \'s and runs commands2, then rejoins normal flow after hitting the / and &gt;. Either path taken ends up at the Fe command which ends the program. For an example of a loop:<br>
+<pre>  /Fe
+F?/commands</pre>
+This would loop commands untill <i>Pop</i> is not 0, where it will hit the /'s and end the program with Fe.<br><br>
+
+Every drawing command in <b>Zetaplex</b> uses the graphics stacks for how the drawing will be done (The only thing other than drawing that uses these settings is outputting to the screen). There are six settings for graphics:
+<pre>  <b>0.</b> Coordinates 1
+  <b>1.</b> Coordinates 2
+  <b>2.</b> Coordinates 3
+  <b>3.</b> Color 1
+  <b>4.</b> Color 2
+  <b>5.</b> Radius
+  <b>6.</b> Line Width
+  <b>7.</b> Fill options</pre>
+Each setting is tied to a stack, at program start setting 0 is tied to stack 0, stack 1 is tied to stack 1, and so on. You can set/get which stack a setting is set to with the Dg/DG commands. The way the settings work is when a drawing command is called, the parameters for the command are <i>Peeked</i> from the stack they are tied to. The Fill otions is a bitmask:
+<pre>  <b>0.</b> No fill.
+  <b>1.</b> Fill with Color 1
+  <b>2.</b> Fill with Color 2
+  <b>4.</b> Text background is Color 2</pre><br><br>
+
+<b>Command List:</b>
+<ol>
+<li><a href="#s">Stack Section: s</a><ul>
+<li><a href="#s+">s+</a>
+<li><a href="#s-">s-</a>
+<li><a href="#s*">s*</a>
+<li><a href="#sZ">sZ</a>
+<li><a href="#sd">sd</a>
+<li><a href="#sD">sD</a>
+<li><a href="#ss">ss</a>
+<li><a href="#sS">sS</a>
+<li><a href="#sy">sy</a>
+<li><a href="#sY">sY</a>
+<li><a href="#sw">sw</a>
+<li><a href="#sW">sW</a>
+<li><a href="#sf">sf</a>
+<li><a href="#sa">sa</a>
+<li><a href="#sc">sc</a>
+<li><a href="#sC">sC</a>
+<li><a href="#sR">sR</a>
+</ul>
+<li><a href="#l">List Section: l</a><ul>
+<li><a href="#lg">lg</a>
+<li><a href="#li">li</a>
+<li><a href="#lI">lI</a>
+<li><a href="#lc">lc</a>
+<li><a href="#lC">lC</a>
+<li><a href="#lr">lr</a>
+<li><a href="#lR">lR</a>
+<li><a href="#lf">lf</a>
+<li><a href="#ls">ls</a>
+</ul>
+<li><a href="#S">String Section: S</a><ul>
+<li><a href="#Sr">Sr</a>
+<li><a href="#Sd">Sd</a>
+<li><a href="#Sy">Sy</a>
+<li><a href="#SY">SY</a>
+<li><a href="#Sc">Sc</a>
+<li><a href="#Sw">Sw</a>
+<li><a href="#SZ">SZ</a>
+<li><a href="#Ss">Ss</a>
+<li><a href="#SS">SS</a>
+<li><a href="#SN">SN</a>
+<li><a href="#SR">SR</a>
+</ul>
+<li><a href="#F">Flow Section: F</a><ul>
+<li><a href="#Fe">Fe</a>
+<li><a href="#F?">F?</a>
+<li><a href="#F!">F!</a>
+<li><a href="#F=">F=</a>
+<li><a href="#FE">FE</a>
+<li><a href="#FS">FS</a>
+<li><a href="#FG">FG</a>
+<li><a href="#Fj">Fj</a>
+<li><a href="#FJ">FJ</a>
+<li><a href="#Fs">Fs</a>
+<li><a href="#Fb">Fb</a>
+<li><a href="#Fn">Fn</a>
+<li><a href="#Fp">Fp</a>
+<li><a href="#Fg">Fg</a>
+</ul>
+<li><a href="#O">Output Section: O</a><ul>
+<li><a href="#On">On</a>
+<li><a href="#ON">ON</a>
+<li><a href="#Oc">Oc</a>
+<li><a href="#OC">OC</a>
+<li><a href="#Os">Os</a>
+<li><a href="#OS">OS</a>
+</ul>
+<li><a href="#I">Input Section: I</a><ul>
+<li><a href="#Is">Is</a>
+<li><a href="#IS">IS</a>
+<li><a href="#Ic">Ic</a>
+<li><a href="#In">In</a>
+<li><a href="#IN">IN</a>
+</ul>
+<li><a href="#D">Display/Drawing Section: D</a><ul>
+<li><a href="#Dr">Dr</a>
+<li><a href="#DR">DR</a>
+<li><a href="#Df">Df</a>
+<li><a href="#Dc">Dc</a>
+<li><a href="#DC">DC</a>
+<li><a href="#Dp">Dp</a>
+<li><a href="#Db">Db</a>
+<li><a href="#Dl">Dl</a>
+<li><a href="#Dw">Dw</a>
+<li><a href="#Dh">Dh</a>
+<li><a href="#Dg">Dg</a>
+<li><a href="#DG">DG</a>
+<li><a href="#Dk">Dk</a>
+<li><a href="#Dt">Dt</a>
+<li><a href="#DT">DT</a>
+</ul>
+<li><a href="#F">Fonts Section: T</a><ul>
+<li><a href="#F+">T+</a>
+<li><a href="#F-">T-</a>
+<li><a href="#Fl">Tl</a>
+<li><a href="#FL">TL</a>
+<li><a href="#Ff">Tf</a>
+<li><a href="#FF">TF</a>
+<li><a href="#Fn">Tn</a>
+<li><a href="#Fd">Td</a>
+<li><a href="#Fd">Td</a>
+</ul>
+<li><a href="#l">Layers Section: l</a><ul>
+<li><a href="#l+">l+</a>
+<li><a href="#l-">l-</a>
+<li><a href="#la">la</a>
+<li><a href="#ll">ll</a>
+<li><a href="#lL">lL</a>
+<li><a href="#lf">lf</a>
+<li><a href="#lF">lF</a>
+<li><a href="#lt">lt</a>
+<li><a href="#lT">lT</a>
+<li><a href="#lc">lc</a>
+<li><a href="#ln">ln</a>
+<li><a href="#ld">ld</a>
+<li><a href="#ld">ld</a>
+</ul>
+<li><a href="#K">Keyboard Section: K</a><ul>
+<li><a href="#Ks">Ks</a>
+<li><a href="#Kr">Kr</a>
+<li><a href="#Kn">Kn</a>
+<li><a href="#Kp">Kp</a>
+<li><a href="#Kc">Kc</a>
+<li><a href="#KS">KS</a>
+</ul>
+<li><a href="#M">Math Section: M</a><ul>
+<li><a href="#Mi">Mi</a>
+<li><a href="#Md">Md</a>
+<li><a href="#M+">M+</a>
+<li><a href="#M-">M-</a>
+<li><a href="#M*">M*</a>
+<li><a href="#M_">M_</a>
+<li><a href="#M%">M%</a>
+<li><a href="#M^">M^</a>
+<li><a href="#M~">M~</a>
+<li><a href="#MI">MI</a>
+<li><a href="#Mr">Mr</a>
+<li><a href="#MR">MR</a>
+<li><a href="#Ms">Ms</a>
+<li><a href="#MS">MS</a>
+<li><a href="#Mc">Mc</a>
+<li><a href="#MC">MC</a>
+<li><a href="#Mt">Mt</a>
+<li><a href="#MT">MT</a>
+<li><a href="#MQ">MQ</a>
+<li><a href="#MD">MD</a>
+<li><a href="#Mn">Mn</a>
+</ul>
+<li><a href="#L">Logic Section: L</a><ul>
+<li><a href="#L&">L&</a>
+<li><a href="#L|">L|</a>
+<li><a href="#LX">LX</a>
+<li><a href="#L!">L!</a>
+</ul>
+<li><a href="#f">File Section: f</a><ul>
+<li><a href="#f+">f+</a>
+<li><a href="#f-">f-</a>
+<li><a href="#fA">fA</a>
+<li><a href="#fR">fR</a>
+<li><a href="#fr">fr</a>
+<li><a href="#fa">fa</a>
+<li><a href="#fC">fC</a>
+<li><a href="#fc">fc</a>
+<li><a href="#fs">fs</a>
+<li><a href="#fn">fn</a>
+</ul>
+<li><a href="#c">Custom command creating Section: c</a><ul>
+<li><a href="#c*">c&lt;anything&gt;</a>
+</ul>
+<li><a href="#C">Custom commands Section: C</a><ul>
+<li><a href="#CR">CR</a>
+<li><a href="#C*">C&lt;anything&gt;</a>
+</ul>
+<li><a href="#m">Misc commands Section: m</a><ul>
+<li><a href="#mt">mt</a>
+<li><a href="#mT">mT</a>
+<li><a href="#mD">mD</a>
+</ul>
+<li><a href="#i">Socket commands Section: i</a><ul>
+<li><a href="#i+">i+</a>
+<li><a href="#i-">i-</a>
+<li><a href="#ic">ic</a>
+<li><a href="#iC">iC</a>
+<li><a href="#il">il</a>
+<li><a href="#iL">iL</a>
+<li><a href="#is">is</a>
+<li><a href="#iS">iS</a>
+<li><a href="#ir">ir</a>
+<li><a href="#iR">iR</a>
+</ul>
+<li><a href="#R">Regular Expressions Section: R</a><ul>
+<li><a href="#Rm">Rm</a>
+<li><a href="#Rr">Rr</a>
+</ul>
+<li><a href="#Q">Source manipulation Section: Q</a><ul>
+<li><a href="#Qg">Qg</a>
+<li><a href="#QG">QG</a>
+<li><a href="#Qc">Qc</a>
+<li><a href="#QC">QC</a>
+<li><a href="#Qs">Qs</a>
+</ul>
+<li><a href="#h">Variable Setting: h</a><ul>
+<li><a href="#h*">h&lt;anything&gt;</a>
+</ul>
+<li><a href="#H">Variable Getting: H</a><ul>
+<li><a href="#H*">H&lt;anything&gt;</a>
+</ul></ol><br><br>
+
+<center>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="s">1. Stack Section: s</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="s+">+</b></center></td><td>Increase stack pointer</td></tr>
+<tr><td><center><b id="s-">-</b></center></td><td>Decrease stack pointer</td></tr>
+<tr><td><center><b id="s*">*</b></center></td><td>Increase/Decrease stack pointer by <i>Pop</i></td></tr>
+<tr><td><center><b id="sZ">Z</b></center></td><td>Zero the stack</td></tr>
+<tr><td><center><b id="sd">d</b></center></td><td><i>Pop</i> and do nothing</td></tr>
+<tr><td><center><b id="sD">D</b></center></td><td><i>Pop</i> x, then <i>Pop</i> and do nothing x times</td></tr>
+<tr><td><center><b id="ss">s</b></center></td><td><i>Push</i> the stack pointer onto the stack</td></tr>
+<tr><td><center><b id="sS">S</b></center></td><td><i>Pop</i> the stack pointer from the stack</td></tr>
+<tr><td><center><b id="sy">y</b></center></td><td>Duplicate <i>Peek</i></td></tr>
+<tr><td><center><b id="sY">Y</b></center></td><td><i>Pop</i> x, then dublicate <i>Pop</i> x times</td></tr>
+<tr><td><center><b id="sw">w</b></center></td><td>Dublicate top two <i>Pop</i>s</td></tr>
+<tr><td><center><b id="sW">W</b></center></td><td>Dublicate top <i>Pop</i> <i>Pop</i>s</td></tr>
+<tr><td><center><b id="sf">f</b></center></td><td><i>Pop</i> x and y, <i>Push</i> y then x</td></tr>
+<tr><td><center><b id="sa">a</b></center></td><td><i>Push</i> the amount of numbers on the stack</td></tr>
+<tr><td><center><b id="sc">c</b></center></td><td><i>Pop</i> x, then copy <i>Peek</i> to stack x</td></tr>
+<tr><td><center><b id="sC">C</b></center></td><td><i>Pop</i> x and y, then copy y numbers to stack x</td></tr>
+<tr><td><center><b id="sR">R</b></center></td><td>Replace all <i>Pop</i> with <i>Pop</i></td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="l">2. List Section: l</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="lg">g</b></center></td><td>Get number <i>Pop</i> in the stack</td></tr>
+<tr><td><center><b id="li">i</b></center></td><td><i>Push</i> index of <i>Pop</i> in the stack</td></tr>
+<tr><td><center><b id="lI">I</b></center></td><td><i>Push</i> index <i>Pop</i> of <i>Pop</i> in the stack</td></tr>
+<tr><td><center><b id="lc">c</b></center></td><td><i>Pop</i> x, then copy number <i>Pop</i> to stack x</td></tr>
+<tr><td><center><b id="lC">C</b></center></td><td><i>Pop</i> x and y, then copy y numbers starting from <i>Pop</i> to stack x</td></tr>
+<tr><td><center><b id="lr">r</b></center></td><td>Remove all occurences of <i>Pop</i></td></tr>
+<tr><td><center><b id="lR">R</b></center></td><td>Remove <i>Pop</i> occurences of <i>Pop</i></td></tr>
+<tr><td><center><b id="lf">f</b></center></td><td><i>Pop</i> x, swap <i>Pop</i> with number x</td></tr>
+<tr><td><center><b id="ls">s</b></center></td><td><i>Pop</i> x, set item x to <i>Pop</i></td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="S">3. String Section: S</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="Sr">r</b></center></td><td>Reverse string</td></tr>
+<tr><td><center><b id="Sd">d</b></center></td><td>Delete string</td></tr>
+<tr><td><center><b id="Sy">y</b></center></td><td>Copy string</td></tr>
+<tr><td><center><b id="SY">Y</b></center></td><td><i>Pop</i> x then copy string x times</td></tr>
+<tr><td><center><b id="Sc">c</b></center></td><td><i>Pop</i> x, then copy string to stack x</td></tr>
+<tr><td><center><b id="Sw">w</b></center></td><td>Copy top two strings</td></tr>
+<tr><td><center><b id="SZ">Z</b></center></td><td>Remove the seperator for the string</td></tr>
+<tr><td><center><b id="Ss">s</b></center></td><td><i>Push</i> the height then width of string</td></tr>
+<tr><td><center><b id="SS">S</b></center></td><td>Turn a number into a string</td></tr>
+<tr><td><center><b id="SN">N</b></center></td><td>Turn a string into a number</td></tr>
+<tr><td><center><b id="SR">R</b></center></td><td>Replace all of <i>Pop</i> with <i>Pop</i> in string</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="F">4. Flow Section: F</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="Fe">e</b></center></td><td>End program</td></tr>
+<tr><td><center><b id="F?">?</b></center></td><td>If <i>Pop</i> is zero, jump the next command</td></tr>
+<tr><td><center><b id="F!">!</b></center></td><td>If <i>Pop</i> is not negative, jump next command</td></tr>
+<tr><td><center><b id="F=">=</b></center></td><td>If <i>Pop</i> != <i>Pop</i>, jump the next command</td></tr>
+<tr><td><center><b id="FE">E</b></center></td><td>If <i>Pop</i>,<i>Pop</i> != <i>Pop</i>,<i>Pop</i> jump the next command</td></tr>
+<tr><td><center><b id="FS">S</b></center></td><td>If string != string jump the next command</td></tr>
+<tr><td><center><b id="FG">G</b></center></td><td>If <i>Pop</i> > <i>Pop</i>, jump the next command</td></tr>
+<tr><td><center><b id="Fj">j</b></center></td><td>Jump next command</td></tr>
+<tr><td><center><b id="FJ">J</b></center></td><td>Jump next <i>Pop</i> commands</td></tr>
+<tr><td><center><b id="Fs">s</b></center></td><td>Skip till character <i>Pop</i> is found</td></tr>
+<tr><td><center><b id="Fb">b</b></center></td><td>Go to the begining of the current line and go right</td></tr>
+<tr><td><center><b id="Fn">n</b></center></td><td>Go to the begining of the next line of code and go right</td></tr>
+<tr><td><center><b id="Fp">p</b></center></td><td>Go to the begining of the previous line of code and go right</td></tr>
+<tr><td><center><b id="Fg">g</b></center></td><td>Go to command at <i>Pop</i>,<i>Pop</i></td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="O">5. Output Section: O</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="On">n</b></center></td><td>Output <i>Pop</i> as a number</td></tr>
+<tr><td><center><b id="ON">N</b></center></td><td>Output <i>Pop</i> as a number and <i>Push</i> y then x coordinates of the lines end</td></tr>
+<tr><td><center><b id="Oc">c</b></center></td><td>Output <i>Pop</i> as a character</td></tr>
+<tr><td><center><b id="OC">C</b></center></td><td>Output <i>Pop</i> as a character and <i>Push</i> y then x coordinates of the lines end</td></tr>
+<tr><td><center><b id="Os">s</b></center></td><td>Output a string</td></tr>
+<tr><td><center><b id="OS">S</b></center></td><td>Output a string and <i>Push</i> y then x coordinates of the lines end</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="I">6. Input Section: I</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="Is">s</b></center></td><td>Input a string</td></tr>
+<tr><td><center><b id="IS">S</b></center></td><td>Input a string with a max length of <i>Pop</i></td></tr>
+<tr><td><center><b id="Ic">c</b></center></td><td>Input a character</td></tr>
+<tr><td><center><b id="In">n</b></center></td><td>Input a number</td></tr>
+<tr><td><center><b id="IN">N</b></center></td><td>Input a number with a max length of <i>Pop</i></td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="D">7. Display/Drawing Section: D</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="Dr">r</b></center></td><td>Refresh the screen</td></tr>
+<tr><td><center><b id="DR">R</b></center></td><td>Change resolution to <i>Pop</i>,<i>Pop</i></td></tr>
+<tr><td><center><b id="Df">f</b></center></td><td>Set to fullscreen</td></tr>
+<tr><td><center><b id="Dc">c</b></center></td><td>Clear the screen(all layers)</td></tr>
+<tr><td><center><b id="DC">C</b></center></td><td>Copy a part of the screen to <i>Pop</i> x,y</td></tr>
+<tr><td><center><b id="Dp">p</b></center></td><td>Draw a point</td></tr>
+<tr><td><center><b id="Db">b</b></center></td><td>Draw a box</td></tr>
+<tr><td><center><b id="Dl">l</b></center></td><td>Draw a line</td></tr>
+<tr><td><center><b id="Dw">w</b></center></td><td><i>Push</i> width of screen</td></tr>
+<tr><td><center><b id="Dh">h</b></center></td><td><i>Push</i> height of screen</td></tr>
+<tr><td><center><b id="Dg">g</b></center></td><td><i>Push</i> the stack pointer of graphics setting <i>Pop</i></td></tr>
+<tr><td><center><b id="DG">G</b></center></td><td>Set graphics setting <i>Pop</i> to <i>Pop</i></td></tr>
+<tr><td><center><b id="Dk">k</b></center></td><td>Get the pressed status of key <i>Pop</i></td></tr>
+<tr><td><center><b id="Dt">t</b></center></td><td><i>Push</i> titlebar text as string</td></tr>
+<tr><td><center><b id="DT">T</b></center></td><td>Set titlebar text to a string</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="F">8. Fonts Section: T</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="F+">+</b></center></td><td>Increase font pointer</td></tr>
+<tr><td><center><b id="F-">-</b></center></td><td>Decrease font pointer</td></tr>
+<tr><td><center><b id="Fl">l</b></center></td><td><i>Push</i> font pointer to stack</td></tr>
+<tr><td><center><b id="FL">L</b></center></td><td>Set font pointer to <i>Pop</i></td></tr>
+<tr><td><center><b id="Ff">f</b></center></td><td>Flip top two fonts</td></tr>
+<tr><td><center><b id="FF">F</b></center></td><td>Flip top font with font <i>Pop</i></td></tr>
+<tr><td><center><b id="Fn">n</b></center></td><td>New font</td></tr>
+<tr><td><center><b id="Fd">d</b></center></td><td>Delete current font(except for font 0)</td></tr>
+<tr><td><center><b id="Fd">d</b></center></td><td>Delete <i>Pop</i> fonts starting from current font</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="l">9. Layers Section: l</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="l+">+</b></center></td><td>Increase layer pointer</td></tr>
+<tr><td><center><b id="l-">-</b></center></td><td>Decrease layer pointer</td></tr>
+<tr><td><center><b id="la">a</b></center></td><td><i>Push</i> amount of layers on stack</td></tr>
+<tr><td><center><b id="ll">l</b></center></td><td><i>Push</i> layer pointer to stack</td></tr>
+<tr><td><center><b id="lL">L</b></center></td><td>Set layer pointer to <i>Pop</i></td></tr>
+<tr><td><center><b id="lf">f</b></center></td><td>Flip top two layers</td></tr>
+<tr><td><center><b id="lF">F</b></center></td><td>Flip top layer with layer <i>Pop</i></td></tr>
+<tr><td><center><b id="lt">t</b></center></td><td><i>Push</i> transparency to stack</td></tr>
+<tr><td><center><b id="lT">T</b></center></td><td>Set transparency for layer to <i>Pop</i>,<i>Pop</i>,<i>Pop</i></td></tr>
+<tr><td><center><b id="lc">c</b></center></td><td>Clear current layer</td></tr>
+<tr><td><center><b id="ln">n</b></center></td><td>New layer</td></tr>
+<tr><td><center><b id="ld">d</b></center></td><td>Delete current layer(except for layer 0)</td></tr>
+<tr><td><center><b id="ld">d</b></center></td><td>Delete <i>Pop</i> layers starting from current layer</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="K">10. Keyboard Section: K</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="Ks">s</b></center></td><td>Sleep till keypress</td></tr>
+<tr><td><center><b id="Kr">r</b></center></td><td>Record keypresses</td></tr>
+<tr><td><center><b id="Kn">n</b></center></td><td><i>Push</i> top keypress from keyrecord</td></tr>
+<tr><td><center><b id="Kp">p</b></center></td><td><i>Push</i> keypresses from keyrecord</td></tr>
+<tr><td><center><b id="Kc">c</b></center></td><td>Clear keypresses from keyrecord</td></tr>
+<tr><td><center><b id="KS">S</b></center></td><td>Stop recording keypresses</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="M">11. Math Section: M</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="Mi">i</b></center></td><td><i>Push</i> <i>Pop</i> + 1</td></tr>
+<tr><td><center><b id="Md">d</b></center></td><td><i>Push</i> <i>Pop</i> - 1</td></tr>
+<tr><td><center><b id="M+">+</b></center></td><td><i>Push</i> <i>Pop</i> + <i>Pop</i></td></tr>
+<tr><td><center><b id="M-">-</b></center></td><td><i>Push</i> <i>Pop</i> - <i>Pop</i></td></tr>
+<tr><td><center><b id="M*">*</b></center></td><td><i>Push</i> <i>Pop</i> * <i>Pop</i></td></tr>
+<tr><td><center><b id="M_">_</b></center></td><td><i>Push</i> <i>Pop</i> / <i>Pop</i></td></tr>
+<tr><td><center><b id="M%">%</b></center></td><td><i>Push</i> <i>Pop</i> % <i>Pop</i></td></tr>
+<tr><td><center><b id="M^">^</b></center></td><td><i>Push</i> <i>Pop</i> ^ <i>Pop</i></td></tr>
+<tr><td><center><b id="M~">~</b></center></td><td><i>Push</i> the square root of <i>Pop</i></td></tr>
+<tr><td><center><b id="MI">I</b></center></td><td><i>Pop</i> x and <i>Push</i> x as an integer(remove anything after the .)</td></tr>
+<tr><td><center><b id="Mr">r</b></center></td><td><i>Push</i> a random number from 0 to 1</td></tr>
+<tr><td><center><b id="MR">R</b></center></td><td><i>Push</i> a random number from <i>Pop</i> to <i>Pop</i></td></tr>
+<tr><td><center><b id="Ms">s</b></center></td><td><i>Push</i> the sin of <i>Pop</i></td></tr>
+<tr><td><center><b id="MS">S</b></center></td><td><i>Push</i> the arcsin of <i>Pop</i></td></tr>
+<tr><td><center><b id="Mc">c</b></center></td><td><i>Push</i> the cos of <i>Pop</i></td></tr>
+<tr><td><center><b id="MC">C</b></center></td><td><i>Push</i> the arccos of <i>Pop</i></td></tr>
+<tr><td><center><b id="Mt">t</b></center></td><td><i>Push</i> the tan of <i>Pop</i></td></tr>
+<tr><td><center><b id="MT">T</b></center></td><td><i>Push</i> the arctan of <i>Pop</i></td></tr>
+<tr><td><center><b id="MQ">Q</b></center></td><td><i>Push</i> <i>Pop</i> in radians</td></tr>
+<tr><td><center><b id="MD">D</b></center></td><td><i>Push</i> <i>Pop</i> in degrees</td></tr>
+<tr><td><center><b id="Mn">n</b></center></td><td>Negate top value</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="L">12. Logic Section: L</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="L&">&</b></center></td><td>Bitwise and</td></tr>
+<tr><td><center><b id="L|">|</b></center></td><td>Bitwise or</td></tr>
+<tr><td><center><b id="LX">X</b></center></td><td>Bitwise xor</td></tr>
+<tr><td><center><b id="L!">!</b></center></td><td>Logical not</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="f">13. File Section: f</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="f+">+</b></center></td><td>Increase file pointer</td></tr>
+<tr><td><center><b id="f-">-</b></center></td><td>Decrease file pointer</td></tr>
+<tr><td><center><b id="fA">W</b></center></td><td>Open a file with path string for writing</td></tr>
+<tr><td><center><b id="fR">R</b></center></td><td>Open a file with path string for reading</td></tr>
+<tr><td><center><b id="fr">r</b></center></td><td><i>Push</i> next ascii from the file</td></tr>
+<tr><td><center><b id="fa">a</b></center></td><td>Read the remaining characters from the file</td></tr>
+<tr><td><center><b id="fC">C</b></center></td><td>Close the file</td></tr>
+<tr><td><center><b id="fc">c</b></center></td><td>Write a chr to the file</td></tr>
+<tr><td><center><b id="fs">s</b></center></td><td>Write a string to the file</td></tr>
+<tr><td><center><b id="fn">n</b></center></td><td>Write a number to the file</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="c">14. Custom command creating Section: c</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="c*">Anything other than R</b></center></td><td>Set custom command to (<i>Pop</i>,<i>Pop</i>) with direction <i>Pop</i></td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="C">15. Custom commands Section: C</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="CR">R</b></center></td><td>Return to position and direction before custom command</td></tr>
+<tr><td><center><b id="C*">Anything other than R</b></center></td><td>Jump to X,Y and Direction of custsom command</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="m">16. Misc commands Section: m</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="mt">t</b></center></td><td><i>Push</i> ticks since program start</td></tr>
+<tr><td><center><b id="mT">T</b></center></td><td><i>Push</i> ticks since last mt or mT</td></tr>
+<tr><td><center><b id="mD">D</b></center></td><td>Toggle debug output</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="i">17. Socket commands Section: i</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="i+">+</b></center></td><td>Increase socket pointer</td></tr>
+<tr><td><center><b id="i-">-</b></center></td><td>Decrease socket pointer</td></tr>
+<tr><td><center><b id="ic">c</b></center></td><td>Connect to socket with port <i>Pop</i> and ip string</td></tr>
+<tr><td><center><b id="iC">C</b></center></td><td>Connect to socket with port <i>Pop</i> and ip string and read size <i>Pop</i></td></tr>
+<tr><td><center><b id="il">l</b></center></td><td>Start a listen socket</td></tr>
+<tr><td><center><b id="iL">L</b></center></td><td>Start a listen socket with read size <i>Pop</i> and max queue <i>Pop</i></td></tr>
+<tr><td><center><b id="is">s</b></center></td><td>Check the status of a socket</td></tr>
+<tr><td><center><b id="iS">S</b></center></td><td>Send data to a socket</td></tr>
+<tr><td><center><b id="ir">r</b></center></td><td>Read <i>Pop</i> bytes for a socket</td></tr>
+<tr><td><center><b id="iR">R</b></center></td><td>Read up to a delimeter string</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="R">18. Regular Expressions Section: R</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="Rm">m</b></center></td><td>Checks if pattern string matches string</td></tr>
+<tr><td><center><b id="Rr">r</b></center></td><td>Replace all non-overlapping matches of pattern string with replace string in string</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="Q">19. Source manipulation Section: Q</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="Qg">g</b></center></td><td>Pop x then y, Push ascii of character at position x,y in source</td></tr>
+<tr><td><center><b id="QG">G</b></center></td><td>Pop x, y, then d, Push asciis of command at position x,y going in direction d % 4. command ascii pushed first, section second</td></tr>
+<tr><td><center><b id="Qc">c</b></center></td><td>Pop c, x, then y, set character at position x,y in source to character with ascii value c % 255 + 1</td></tr>
+<tr><td><center><b id="QC">C</b></center></td><td>Pop s, c, x, y then d, set command at position x,y going in direction d % 4, to section s and command c, both % 255 + 1</td></tr>
+<tr><td><center><b id="Qs">s</b></center></td><td>Push the height then width of the source</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="v">20. Variable setting: h</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="h*">Anything</b></center></td><td>Sets variable to <i>Pop</i></td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="V">21. Variable getting: H</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="H*">Anything</b></center></td><td><i>Push</i> variable to stack</td></tr>
+</table></center><br><br>
+
+<center><b>Examples:</b></center><br>
+<b>Hello, World!</b><br>
+This is the most basic Hello, World! program:
+<pre>"Hello, World!"SrOsDrFe</pre>
+It starts by <i>Pushing the string</i> to the stack then reversing it with Sr. After that it draws the string to the screen with Os, then refreshes the screen. The Fe command then ends the program.<br>
+This is not the only way to do a Hello, World! program, a few more examples are:
+<pre>&lt;eFrDsO"Hello, World!"</pre>
+<pre>\      / #111#87\ #        #         ######
+3      4 #        #        #        #      #
+3      1 #        #        #        #      #
+#      1 #        #        #        #      #
+1####### /44#23#/ #        #        #      #
+0      8 #        #        #        #      #
+0      0 1        #        #        #      #
+#      1 1        #        #        #      #
+\      / \1#108sy 101#72Os DrFe####  ######</pre>
+<pre>"Hell"\
+/d!"S\o
+"/rFer,
+l\DsO/"
+\"roW /</pre><br>
+
+<b>Fibonaci Sequence</b><br>
+This demonstrates input and file output.
+<pre>
+s+1sys-"Generate amount: "SrOSDr3INsy1sfFG\2sfM-&gt;syF?\"fib.txt"SrfWF!\s+&gt;syF?\fCFe
+                                          \                          &gt;Fe
+                                                                        /    \MIfn10fc
+                                                /    \s+swM+s-Md
+</pre>

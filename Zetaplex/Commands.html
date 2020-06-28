@@ -1,0 +1,225 @@
+<center>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="s">1. Stack Section: s</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="s+">+</b></center></td><td>Increase stack pointer</td></tr>
+<tr><td><center><b id="s-">-</b></center></td><td>Decrease stack pointer</td></tr>
+<tr><td><center><b id="s*">*</b></center></td><td>Increase/Decrease stack pointer by <i>Pop</i></td></tr>
+<tr><td><center><b id="sZ">Z</b></center></td><td>Zero the stack</td></tr>
+<tr><td><center><b id="sd">d</b></center></td><td><i>Pop</i> and do nothing</td></tr>
+<tr><td><center><b id="sD">D</b></center></td><td><i>Pop</i> x, then <i>Pop</i> and do nothing x times</td></tr>
+<tr><td><center><b id="ss">s</b></center></td><td><i>Push</i> the stack pointer onto the stack</td></tr>
+<tr><td><center><b id="sS">S</b></center></td><td><i>Pop</i> the stack pointer from the stack</td></tr>
+<tr><td><center><b id="sy">y</b></center></td><td>Duplicate <i>Peek</i></td></tr>
+<tr><td><center><b id="sY">Y</b></center></td><td><i>Pop</i> x, then dublicate <i>Pop</i> x times</td></tr>
+<tr><td><center><b id="sw">w</b></center></td><td>Dublicate top two <i>Pop</i>s</td></tr>
+<tr><td><center><b id="sW">W</b></center></td><td>Dublicate top <i>Pop</i> <i>Pop</i>s</td></tr>
+<tr><td><center><b id="sf">f</b></center></td><td><i>Pop</i> x and y, <i>Push</i> y then x</td></tr>
+<tr><td><center><b id="sa">a</b></center></td><td><i>Push</i> the amount of numbers on the stack</td></tr>
+<tr><td><center><b id="sc">c</b></center></td><td><i>Pop</i> x, then copy <i>Peek</i> to stack x</td></tr>
+<tr><td><center><b id="sC">C</b></center></td><td><i>Pop</i> x and y, then copy y numbers to stack x</td></tr>
+<tr><td><center><b id="sR">R</b></center></td><td>Replace all <i>Pop</i> with <i>Pop</i></td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="l">2. List Section: l</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="lg">g</b></center></td><td>Get number <i>Pop</i> in the stack</td></tr>
+<tr><td><center><b id="li">i</b></center></td><td><i>Push</i> index of <i>Pop</i> in the stack</td></tr>
+<tr><td><center><b id="lI">I</b></center></td><td><i>Push</i> index <i>Pop</i> of <i>Pop</i> in the stack</td></tr>
+<tr><td><center><b id="lc">c</b></center></td><td><i>Pop</i> x, then copy number <i>Pop</i> to stack x</td></tr>
+<tr><td><center><b id="lC">C</b></center></td><td><i>Pop</i> x and y, then copy y numbers starting from <i>Pop</i> to stack x</td></tr>
+<tr><td><center><b id="lr">r</b></center></td><td>Remove all occurences of <i>Pop</i></td></tr>
+<tr><td><center><b id="lR">R</b></center></td><td>Remove <i>Pop</i> occurences of <i>Pop</i></td></tr>
+<tr><td><center><b id="lf">f</b></center></td><td><i>Pop</i> x, swap <i>Pop</i> with number x</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="S">3. String Section: S</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="Sr">r</b></center></td><td>Reverse string</td></tr>
+<tr><td><center><b id="Sd">d</b></center></td><td>Delete string</td></tr>
+<tr><td><center><b id="Sc">c</b></center></td><td>Copy string</td></tr>
+<tr><td><center><b id="SC">C</b></center></td><td><i>Pop</i> x then copy string x times</td></tr>
+<tr><td><center><b id="Sw">w</b></center></td><td>Copy top two strings</td></tr>
+<tr><td><center><b id="SZ">Z</b></center></td><td>Remove the seperator for the string</td></tr>
+<tr><td><center><b id="Ss">s</b></center></td><td><i>Push</i> the height then width of string</td></tr>
+<tr><td><center><b id="SS">S</b></center></td><td>Turn a number into a string</td></tr>
+<tr><td><center><b id="SN">N</b></center></td><td>Turn a string into a number</td></tr>
+<tr><td><center><b id="SR">R</b></center></td><td>Replace all of <i>Pop</i> with <i>Pop</i> in string</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="F">4. Flow Section: F</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="Fe">e</b></center></td><td>End program</td></tr>
+<tr><td><center><b id="F?">?</b></center></td><td>If <i>Pop</i> is zero, jump the next command</td></tr>
+<tr><td><center><b id="F!">!</b></center></td><td>If <i>Pop</i> is not negative, jump next command</td></tr>
+<tr><td><center><b id="F=">=</b></center></td><td>If <i>Pop</i> != <i>Pop</i>, jump the next command</td></tr>
+<tr><td><center><b id="FE">E</b></center></td><td>If <i>Pop</i>,<i>Pop</i> != <i>Pop</i>,<i>Pop</i> jump the next command</td></tr>
+<tr><td><center><b id="FS">S</b></center></td><td>If string != string jump the next command</td></tr>
+<tr><td><center><b id="FG">G</b></center></td><td>If <i>Pop</i> > <i>Pop</i>, jump the next command</td></tr>
+<tr><td><center><b id="Fj">j</b></center></td><td>Jump next command</td></tr>
+<tr><td><center><b id="FJ">J</b></center></td><td>Jump next <i>Pop</i> commands</td></tr>
+<tr><td><center><b id="Fb">b</b></center></td><td>Go to the begining of the current line and go right</td></tr>
+<tr><td><center><b id="Fn">n</b></center></td><td>Go to the begining of the next line of code and go right</td></tr>
+<tr><td><center><b id="Fp">p</b></center></td><td>Go to the begining of the previous line of code and go right</td></tr>
+<tr><td><center><b id="Fg">g</b></center></td><td>Go to command at <i>Pop</i>,<i>Pop</i></td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="O">5. Output Section: O</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="On">n</b></center></td><td>Output <i>Pop</i> as a number</td></tr>
+<tr><td><center><b id="ON">N</b></center></td><td>Output <i>Pop</i> as a number and <i>Push</i> y then x coordinates of the lines end</td></tr>
+<tr><td><center><b id="Oc">c</b></center></td><td>Output <i>Pop</i> as a character</td></tr>
+<tr><td><center><b id="OC">C</b></center></td><td>Output <i>Pop</i> as a character and <i>Push</i> y then x coordinates of the lines end</td></tr>
+<tr><td><center><b id="Os">s</b></center></td><td>Output a string</td></tr>
+<tr><td><center><b id="OS">S</b></center></td><td>Output a string and <i>Push</i> y then x coordinates of the lines end</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="I">6. Input Section: I</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="Is">s</b></center></td><td>Input a string</td></tr>
+<tr><td><center><b id="IS">S</b></center></td><td>Input a string with a max length of <i>Pop</i></td></tr>
+<tr><td><center><b id="Ic">c</b></center></td><td>Input a character</td></tr>
+<tr><td><center><b id="In">n</b></center></td><td>Input a number</td></tr>
+<tr><td><center><b id="IN">N</b></center></td><td>Input a number with a max length of <i>Pop</i></td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="D">7. Display/Drawing Section: D</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="Dr">r</b></center></td><td>Refresh the screen</td></tr>
+<tr><td><center><b id="DR">R</b></center></td><td>Change resolution to <i>Pop</i>,<i>Pop</i></td></tr>
+<tr><td><center><b id="Df">f</b></center></td><td>Set to fullscreen</td></tr>
+<tr><td><center><b id="Dc">c</b></center></td><td>Clear the screen(all layers)</td></tr>
+<tr><td><center><b id="DC">C</b></center></td><td>Copy a part of the screen to <i>Pop</i> x,y</td></tr>
+<tr><td><center><b id="Dp">p</b></center></td><td>Draw a point</td></tr>
+<tr><td><center><b id="Db">b</b></center></td><td>Draw a box</td></tr>
+<tr><td><center><b id="Dl">l</b></center></td><td>Draw a line</td></tr>
+<tr><td><center><b id="Dw">w</b></center></td><td><i>Push</i> width of screen</td></tr>
+<tr><td><center><b id="Dh">h</b></center></td><td><i>Push</i> height of screen</td></tr>
+<tr><td><center><b id="Dg">g</b></center></td><td><i>Push</i> the stack pointer of graphics setting <i>Pop</i></td></tr>
+<tr><td><center><b id="DG">G</b></center></td><td>Set graphics setting <i>Pop</i> to <i>Pop</i></td></tr>
+<tr><td><center><b id="Dk">k</b></center></td><td>Get the pressed status of key <i>Pop</i></td></tr>
+<tr><td><center><b id="Dt">t</b></center></td><td><i>Push</i> titlebar text as string</td></tr>
+<tr><td><center><b id="DT">T</b></center></td><td>Set titlebar text to a string</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="F">8. Fonts Section: F</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="F+">+</b></center></td><td>Increase font pointer</td></tr>
+<tr><td><center><b id="F-">-</b></center></td><td>Decrease font pointer</td></tr>
+<tr><td><center><b id="Fl">l</b></center></td><td><i>Push</i> font pointer to stack</td></tr>
+<tr><td><center><b id="FL">L</b></center></td><td>Set font pointer to <i>Pop</i></td></tr>
+<tr><td><center><b id="Ff">f</b></center></td><td>Flip top two fonts</td></tr>
+<tr><td><center><b id="FF">F</b></center></td><td>Flip top font with font <i>Pop</i></td></tr>
+<tr><td><center><b id="Fn">n</b></center></td><td>New font</td></tr>
+<tr><td><center><b id="Fd">d</b></center></td><td>Delete current font(except for font 0)</td></tr>
+<tr><td><center><b id="Fd">d</b></center></td><td>Delete <i>Pop</i> fonts starting from current font</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="l">9. Layers Section: l</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="l+">+</b></center></td><td>Increase layer pointer</td></tr>
+<tr><td><center><b id="l-">-</b></center></td><td>Decrease layer pointer</td></tr>
+<tr><td><center><b id="la">a</b></center></td><td><i>Push</i> amount of layers on stack</td></tr>
+<tr><td><center><b id="ll">l</b></center></td><td><i>Push</i> layer pointer to stack</td></tr>
+<tr><td><center><b id="lL">L</b></center></td><td>Set layer pointer to <i>Pop</i></td></tr>
+<tr><td><center><b id="lf">f</b></center></td><td>Flip top two layers</td></tr>
+<tr><td><center><b id="lF">F</b></center></td><td>Flip top layer with layer <i>Pop</i></td></tr>
+<tr><td><center><b id="lt">t</b></center></td><td><i>Push</i> transparency to stack</td></tr>
+<tr><td><center><b id="lT">T</b></center></td><td>Set transparency for layer to <i>Pop</i>,<i>Pop</i>,<i>Pop</i></td></tr>
+<tr><td><center><b id="lc">c</b></center></td><td>Clear current layer</td></tr>
+<tr><td><center><b id="ln">n</b></center></td><td>New layer</td></tr>
+<tr><td><center><b id="ld">d</b></center></td><td>Delete current layer(except for layer 0)</td></tr>
+<tr><td><center><b id="ld">d</b></center></td><td>Delete <i>Pop</i> layers starting from current layer</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="K">10. Keyboard Section: K</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="Ks">s</b></center></td><td>Sleep till keypress</td></tr>
+<tr><td><center><b id="Kr">r</b></center></td><td>Record keypresses</td></tr>
+<tr><td><center><b id="Kn">n</b></center></td><td><i>Push</i> top keypress from keyrecord</td></tr>
+<tr><td><center><b id="Kp">p</b></center></td><td><i>Push</i> keypresses from keyrecord</td></tr>
+<tr><td><center><b id="Kc">c</b></center></td><td>Clear keypresses from keyrecord</td></tr>
+<tr><td><center><b id="KS">S</b></center></td><td>Stop recording keypresses</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="M">11. Math Section: M</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="Mi">i</b></center></td><td><i>Push</i> <i>Pop</i> + 1</td></tr>
+<tr><td><center><b id="Md">d</b></center></td><td><i>Push</i> <i>Pop</i> - 1</td></tr>
+<tr><td><center><b id="M+">+</b></center></td><td><i>Push</i> <i>Pop</i> + <i>Pop</i></td></tr>
+<tr><td><center><b id="M-">-</b></center></td><td><i>Push</i> <i>Pop</i> - <i>Pop</i></td></tr>
+<tr><td><center><b id="M*">*</b></center></td><td><i>Push</i> <i>Pop</i> * <i>Pop</i></td></tr>
+<tr><td><center><b id="M_">_</b></center></td><td><i>Push</i> <i>Pop</i> / <i>Pop</i></td></tr>
+<tr><td><center><b id="M%">%</b></center></td><td><i>Push</i> <i>Pop</i> % <i>Pop</i></td></tr>
+<tr><td><center><b id="M^">^</b></center></td><td><i>Push</i> <i>Pop</i> ^ <i>Pop</i></td></tr>
+<tr><td><center><b id="M~">~</b></center></td><td><i>Push</i> the square root of <i>Pop</i></td></tr>
+<tr><td><center><b id="MI">I</b></center></td><td><i>Pop</i> x and <i>Push</i> x as an integer(remove anything after the .)</td></tr>
+<tr><td><center><b id="Mr">r</b></center></td><td><i>Push</i> a random number from 0 to 1</td></tr>
+<tr><td><center><b id="MR">R</b></center></td><td><i>Push</i> a random number from <i>Pop</i> to <i>Pop</i></td></tr>
+<tr><td><center><b id="Ms">s</b></center></td><td><i>Push</i> the sin of <i>Pop</i></td></tr>
+<tr><td><center><b id="MS">S</b></center></td><td><i>Push</i> the arcsin of <i>Pop</i></td></tr>
+<tr><td><center><b id="Mc">c</b></center></td><td><i>Push</i> the cos of <i>Pop</i></td></tr>
+<tr><td><center><b id="MC">C</b></center></td><td><i>Push</i> the arccos of <i>Pop</i></td></tr>
+<tr><td><center><b id="Mt">t</b></center></td><td><i>Push</i> the tan of <i>Pop</i></td></tr>
+<tr><td><center><b id="MT">T</b></center></td><td><i>Push</i> the arctan of <i>Pop</i></td></tr>
+<tr><td><center><b id="MQ">Q</b></center></td><td><i>Push</i> <i>Pop</i> in radians</td></tr>
+<tr><td><center><b id="MD">D</b></center></td><td><i>Push</i> <i>Pop</i> in degrees</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="L">12. Logic Section: L</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="L&">&</b></center></td><td>Bitwise and</td></tr>
+<tr><td><center><b id="L|">|</b></center></td><td>Bitwise or</td></tr>
+<tr><td><center><b id="LX">X</b></center></td><td>Bitwise xor</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="f">13. File Section: f</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="f+">+</b></center></td><td>Increase file pointer</td></tr>
+<tr><td><center><b id="f-">-</b></center></td><td>Decrease file pointer</td></tr>
+<tr><td><center><b id="fA">A</b></center></td><td>Open a file for writing</td></tr>
+<tr><td><center><b id="fR">R</b></center></td><td>Open a file for reading</td></tr>
+<tr><td><center><b id="fr">r</b></center></td><td><i>Push</i> next ascii from the file</td></tr>
+<tr><td><center><b id="fa">a</b></center></td><td>Read the remaining characters from the file</td></tr>
+<tr><td><center><b id="fC">C</b></center></td><td>Close the file</td></tr>
+<tr><td><center><b id="fc">c</b></center></td><td>Write a chr to the file</td></tr>
+<tr><td><center><b id="fs">s</b></center></td><td>Write a string to the file</td></tr>
+<tr><td><center><b id="fn">n</b></center></td><td>Write a number to the file</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="c">14. Custom command creating Section: c</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b>Anything other than R</b></center></td><td>Set custom command to (<i>Pop</i>,<i>Pop</i>) with direction <i>Pop</i></td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="C">15. Custom commands Section: C</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="CR">R</b></center></td><td>Return to position and direction before custom command</td></tr>
+<tr><td><center><b>Anything other than R</b></center></td><td>Jump to X,Y and Direction of custsom command</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="m">16. Misc commands Section: m</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="mt">t</b></center></td><td><i>Push</i> ticks since program start</td></tr>
+<tr><td><center><b id="mT">T</b></center></td><td><i>Push</i> ticks since last mt or mT</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="i">17. Socket commands Section: i</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="i+">+</b></center></td><td>Increase socket pointer</td></tr>
+<tr><td><center><b id="i-">-</b></center></td><td>Decrease socket pointer</td></tr>
+<tr><td><center><b id="ic">c</b></center></td><td>Connect to socket with port <i>Pop</i> and ip string</td></tr>
+<tr><td><center><b id="iC">C</b></center></td><td>Connect to socket with port <i>Pop</i> and ip string and read size <i>Pop</i></td></tr>
+<tr><td><center><b id="il">l</b></center></td><td>Start a listen socket</td></tr>
+<tr><td><center><b id="iL">L</b></center></td><td>Start a listen socket with read size <i>Pop</i> and max queue <i>Pop</i></td></tr>
+<tr><td><center><b id="is">s</b></center></td><td>Check the status of a socket</td></tr>
+<tr><td><center><b id="iS">S</b></center></td><td>Send data to a socket</td></tr>
+<tr><td><center><b id="ir">r</b></center></td><td>Read <i>Pop</i> bytes for a socket</td></tr>
+<tr><td><center><b id="iR">R</b></center></td><td>Read up to a delimeter string</td></tr>
+</table><br>
+<table border=1 width=90%>
+<tr><td colspan=2><center><b><font size=5 id="R">18. Regular Expressions Section: R</font></b></center></td></tr>
+<tr><td width=10%><center><b>Command</b><center></td><td><center><b>Description</b></center></td></tr>
+<tr><td><center><b id="Rm">m</b></center></td><td>Checks if pattern string matches string</td></tr>
+<tr><td><center><b id="Rr">r</b></center></td><td>Replace all non-overlapping matches of pattern string with replace string in string</td></tr>
+</table><br>

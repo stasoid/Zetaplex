@@ -1,0 +1,367 @@
+==Commands==
+Commands, except the "Special Commands", are made up of two characters, a Section, and a Command. The section is a character that represents a group of commands that are similar to each other. More than one Section can have the same Command, but they will do different things.
+
+These are just some shortforms that I use for explaining the commands:
+;SP : Stack Pointer, which stack you are on: -Infinity to Infinity
+;DP : Direction Pointer, which way program flow goes: 0 = right, 1 = down, 2 = left, 3 = up
+;CP : Current Position, the (x,y) coordinates of the current command
+;Number : Storage for hardcoded numbers(explained more below)
+;Index : Index, like an array except starting at 1(top of stack) instead of 0
+;String : Every value on the top of the stack between 1 and 255 are considered a string made of ASCII values
+
+
+===Special Commands===
+These commands are special because they are only 1 character each(no section). The commands >, v, <, ^, \, and / also execute emediately. For example:
+ F\/e
+  >^
+Will execute the command Fe to end the program.
+
+{| border="1"
+|-
+! CMD
+! Description
+|-
+! >
+| Change DP to 0(right).
+|-
+! v
+| Change DP to 1(down).
+|-
+! <
+| Change DP to 2(left).
+|-
+! ^
+| Change DP to 3(up).
+|-
+! \
+| Reflect DP like a mirror: 0 <-> 1, 2 <-> 3.
+|-
+! /
+| Reflect DP like a mirror: 0 -> 3, 1 -> 0, 2 -> 1, 3 -> 2.
+|-
+! 0-9
+| Add the digit to the end of Number. Once a character other than a digit or space is hit, Numer is pushed and reset.
+|-
+! &nbsp;
+| Do nothing and don't end Number entering.
+|-
+! #
+| Push and reset Number.
+|-
+! "
+| Start or end String entering.
+|-
+! '
+| Push next the next characters ASCII value then jump it.
+|-
+! -
+| If the next character is digit(0-9), add the "-" to Number.
+|-
+! .
+| If there is no Number, set Number to "0."
+|}
+
+
+===Stack Section===
+{| border="1"
+|-
+! CMD
+! Description
+|-
+! s+
+| Increase SP.
+|-
+! s-
+| Decrease SP.
+|-
+! s*
+| Increase SP by Pop(if Pop is negative SP decreases).
+|-
+! sZ
+| Remove everything from the stack(set it to zero's).
+|-
+! sd
+| Pop and do nothing.
+|-
+! sD
+| Pop x, then Pop and do nothing x times.
+|-
+! ss
+| Push SP.
+|-
+! sS
+| Pop SP.
+|-
+! sy
+| Duplicate top value(Push Peek).
+|-
+! sY
+| Pop x, duplicate Peek x times.
+|-
+! sw
+| Duplicate top two values(Pop x, Peek y, Push x, Push y, Push x).
+|-
+! sW
+| Duplicate top Pop values.
+|-
+! sf
+| Flip top two values(Pop x and y, Push y then x)
+|-
+! sF
+| Pop x, flip top x values with the x values behind.
+|-
+! sa
+| Push length of stack.
+|-
+! sc
+| Pop x, copy Peek to Stack x.
+|-
+! sC
+| Pop x and y, copy y top values to Stack x.
+|}
+
+
+===List Section===
+{| border="1"
+|-
+! CMD
+! Description
+|-
+! lg
+| Get the value with Index Pop.
+|-
+! li
+| Push the Index of the first occurence of Pop.
+|-
+! lc
+| Pop x, then copy value with Index Pop to Stack x.
+|-
+! lC
+| Pop x and y, then copy y numbers starting Index Pop to Stack x.
+|-
+! lr
+| Remove all occurences of Pop.
+|-
+! lR
+| Remove Pop occurences of Pop.
+|}
+
+
+===String Section===
+{| border="1"
+|-
+! CMD
+! Description
+|-
+! Sr
+| Reverse a String.
+|-
+! Sd
+| Delete a String.
+|-
+! Sc
+| Copy a String.
+|-
+! SZ
+| Remove the String's ending number(first number <1 or >255).
+|-
+! Ss
+| Push the height then width of a String.
+|}
+
+
+===Flow Section===
+{| border="1"
+|-
+! CMD
+! Description
+|-
+! Fe
+| End program.
+|-
+! Fs
+| Sleep untill keypress.
+|-
+! F?
+| If Pop is zero, jump the next character.
+|-
+! F!
+| If Pop is not negative, jump the next character.
+|-
+! F=
+| If Pop is not Pop, jump the next character.
+|-
+! Fj
+| Jump next character.
+|-
+! FJ
+| Jump next Pop characters.
+|-
+! Fn
+| Set DP to 0 and set CP to the begining of the next line.
+|-
+! Fp
+| Set DP to 0 and set CP to the begining of the previous line.
+|-
+! Fg
+| Set CP to (Pop,Pop).
+|}
+
+
+===Output Section===
+{| border="1"
+|-
+! CMD
+! Description
+|-
+! On
+| Output a number(including negative and decimals if ).
+|-
+! ON
+| Output a number and Push the y then x coordinates for the top right of the String.
+|-
+! Oc
+| Output a character
+|-
+! OC
+| Output a character and Push the y then x coordinates for the top right of the String.
+|-
+! Os
+| Output a String.
+|-
+! oS
+| Output a String and Push the y then x coordinates for the top right of the String.
+|}
+
+
+===Input Section===
+{| border="1"
+|-
+! CMD
+! Description
+|-
+! Is
+| Push 0 then Push the the ASCII values of a String from input(since it pushes the characters in order the input is reversed).
+|-
+! Ic
+| Push the ASCII value of a character  from input.
+|}
+
+
+===Display Section===
+{| border="1"
+|-
+! CMD
+! Description
+|-
+! Dr
+| Refresh screen.
+|-
+! DR
+| Set the resolution to (Pop,Pop).
+|-
+! Dp
+| Draw a point.
+|-
+! Db
+| Draw a box.
+|-
+! Dw
+| Push width of screen.
+|-
+! Dh
+| Push height of screen.
+|-
+! Dg
+| Push DP Pop.
+|-
+! DG
+| Set GP Pop to Pop.
+|-
+! Dk
+| Push the state(0/1, pressed/unpressed) of key Pop.
+|-
+! Dt
+| Push the Titlebar caption as a String.
+|-
+| DT
+| Set the Titlebar caption to a String.
+|}
+
+
+===Math Section===
+{| border="1"
+|-
+! CMD
+! Description
+|-
+! Mi
+| Increase top value by 1(Push Pop + 1).
+|-
+! Md
+| Decrease top value by 1.
+|-
+! M+
+| Push Pop + Pop.
+|-
+! M-
+| Push Pop - Pop.
+|-
+! M*
+| Push Pop * Pop.
+|-
+! M_
+| Push Pop / Pop.
+|-
+! M%
+| Push Pop % Pop.
+|-
+! M^
+| Push Pop ^ Pop.
+|-
+! MI
+| Push Pop as an integer(no decimal).
+|}
+
+
+===Logic Section===
+{| border="1"
+|-
+! CMD
+! Description
+|-
+! &
+| Locical AND.
+|}
+
+
+===File Section===
+{| border="1"
+|-
+! CMD
+! Description
+|-
+! fA
+| Open a file for appending, push file index or -1 for unopened.
+|-
+! fR
+| Open a file for reading, push file index of -1 for unopened.
+|-
+! fr
+| Read 1 character and Push its ASCII value or -1 for EOF.
+|-
+! fC
+| Close current file.
+|-
+! fc
+| Write a character to current file.
+|-
+! fs
+| Write a string to current file.
+|-
+! fn
+| Write a number to current file(including negative and decimals).
+|}
+
+
+===Custom Commands===

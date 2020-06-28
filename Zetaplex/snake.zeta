@@ -1,0 +1,114 @@
+220#200DR"1v ekanS"DT-1#5DG20#6DGFn
+0#10#0cM0#16#0cm0#21#0cI0#29#0ci0#32#0cr0#35#0cf0#40#0ca0#44#0cG0#57#0cg0#63#0cd0#66#0cp0#69#0cD0#73#0cWFn
+50#100"Start"Ss2sfM_sf1scsdsfM-sf1scsfs+Fn
+M+3M+100"Highscores"Ss2sfM_sf2scsdsfM-sf2scsfs+Fn
+M+3M+100"Credits"Ss2sfM_sf3scsdsfM-sf3scsfs+Fn
+M+33M+100"Exit"Ss2sfM_sfsdsfM-s+Fn
+0s+255sysys+255#0sys+"tratS"s+"serocshgiH"s+"stiderC"s+"tixE"Fn
+CMDcDrFe
+
+  [[Function CM : Menu keyboard input]]
+CmFn             /4sSMi4sfM%Cm
+Ks273DkF?\274DkF?/13DkF?\
+Fp       \4sSMdsyF!\    \4sSsy0F=\sy1F=\sy2F=\sy3F=\Fp
+                   \sd3 >CmFp    \CIFp \CHFp \CCFp \CR
+
+  [[Function Cm : Draw Menu to screen]]
+Dc4sS0Fn
+swF=\5>#2DG2sY0DG7M+sSScOs4sSMisy4F=\
+    \6/                             \sdDrCR
+
+  [[Function CI : First Game initialization]]
+12sSsaF?\Fn
+Fn      \CiCR
+19#0s+19Dws+"Lives: "Ss15scsd2sfM_10M-15sc2s+sf2M+2s*Fn
+"0000"Ss198M-sf2sfM_10M-sf1#2#16lCs-"Score: "SssfsdsfM-2s*Fn
+255s+s+1s+" :seviL"s+" :erocS"8s*Fn
+120#100"Press any key to start..."Ss2sfM_sf2sfM_3lfM-3lfM-sfs+"...trats ot yek yna sserP"s+128sysy2s*1#100CiCR
+
+  [[Function Ci: New Game initialization]]
+23sSsd3#5s*sZCrCas+0CGCR
+
+  [[Function Cr : Random position on field]]
+20#1MRMI20#1MRMICR
+
+  [[Function Cf : Check if position is on worm]]
+1#2#28lC28sSsa2sfM_-1M+1Fn   /4sD1CR
+swFG\4sD0CR
+    \sy2M*3M+2#28lC5#2#28lCFE/MiFp
+
+  [[Function Ca : Place apple in free space]]
+27sSsZCrCfF?\CR
+            \Fp
+
+  [[Function CG : Game keyboard input]]
+Cg31sS30#0DG32#2DGScOsDrKrKsCgFn
+29sSKpFn
+              sa1F=\sy273F=\  sy274F=\  sy275F=\    276F=\
+salgF=\salfsa-1M+sD>Fn/Fp  \sd3#1#7FJ\sd1#3#7FJ\sd0#2#7FJ\2#0
+Fn    \               /
+28sSsws+28scs-sy2sfM%    F?\F?-1M+sy     F?\CDCR
+Fn                         \sf3lfsf3F=-1M+ \
+27sSswCf F?\Sr2sDSrswsyF?\sd  >CDCR/21F=\Fn\sy-1M+F!\sf
+1#2#29lC2sD\Ca24sS10M+   \21F=/syF?/sd  >           >CDCR
+Cg45#0Fg   \s+0 F?\1#2#28\34sc34sSswF=\sd
+            .-^   \CDCR  \lC2sDFp     \sdCWCR
+Replace the 0 with Cf for worm collision detection
+  [[Function Cg : Draw game screen]]
+Dc12#0DG13#1DG5#2DGDl14#0DG21sSScOs16#0DGs+ScOs15#0DG6#2DGs+syMIOn17#0DGs+syMIOnFn
+27sS1#2#25lC18#2DGCd5#2DG28sSsa2sfM_1Fn
+swFG\2sDDrCR
+    \sy2M*1M+2#25lCCd28sSMiFp
+
+  [[Function Cd : Calculate and draw a rectangle]]
+25sS1#2#26lCCps+1M+sf1M+sfCp25#0DG26#1DGDbsZs-sZCR
+
+  [[Function Cp : Convert grid location to coordinates]]
+10M*10sfM-sf10M*10M+sfCR
+
+  [[Function CD : Worm death]]
+KS23sSMdsyF?\Fe         /sd\
+            \s+-50M+syF!/  >4s*sZCrCas+sd0CGCR
+
+  [[Function CW : Level complete]]
+KS34sSsy10M+M+sfsy2sfM%F?\sf23sSMi>s+sd4s*sZCrCas+sd0CGCR
+                         \sf23sS  /
+
+
+
+
+start pos
+highscore pos
+credits pos
+exit pos
+selected
+white
+blue
+start string
+highscores string
+credits string
+exit string
+
+divider left
+divider right
+lives pos
+cur lives pos
+score pos
+cur score pos
+red
+black
+fill setting
+lives string
+score string
+lives
+score
+square top left
+square bottem right
+apple pos
+worm pos's
+direction
+press pos
+press string
+gray
+keypress
+goal - range(500, 3501, 500)

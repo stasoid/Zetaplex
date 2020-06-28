@@ -1,0 +1,12 @@
+mDFn
+"toB CRI zelpateZ"DTFn
+"127.0.0.1"SrFn                 "82.96.64.4"
+31202Fn
+icF!\Fn
+Fn  \".tcennoC t'ndluoC"OsDrFe
+"NICK ZetaplexBot"13#10SriSFn
+"USER ZetaplexBot ""ZetaplexBot"" ""localhost"" :Zetaplex IRC Bot"13#10SriSFn
+"^:\S+ 376 ZetaplexBot :.+$"Sr0#10#13iRRmF?,Fb"JOIN #esoteric"13#10SriSFn
+"^:ZetaplexBot![^@]+@\S+ JOIN :#esoteric$"Sr0#10#13iRRmF?,FbFn
+"^:[^!]+![^@]+@\S+ PRIVMSG #esoteric :.+$"0#10#13iRSySrRmF?,FbFn
+0#32SR":]exit"FS,FpSdSd0#33SRSdsd"QUIT :Exit command issued by "SZSriSFe
